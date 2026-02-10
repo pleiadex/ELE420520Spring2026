@@ -10,13 +10,13 @@ def main():
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         input('Prepare to make connection. (Press ENTER to execute s.connect() )')
-        # TODO: connect to the Forward machine; you should expect one line of python codes
-        
+        # connect to the Forward machine
+        s.connect((HOST, PORT))
 
         input('Prepare to send data. (Press ENTER to execute s.sendall() )')
-        # TODO: send the bytes 'Hello from client' to the Forward machine;
-        #  you should expect 2~3 line of python codes
-        
+        # send the bytes 'Hello from client' to the Forward machine
+        msg = b'Hello from client'
+        s.sendall(msg)
 
         # DON't change: receive the data and print out the received data
         data = s.recv(1024)

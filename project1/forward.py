@@ -10,7 +10,8 @@ def main():
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s_to_server:
         input('Prepare to make connection. (Press ENTER to execute s.connect() )')
-        # TODO: make connection to Server machine; you should expect 1 line of codes
+        # make connection to Server machine
+        s_to_server.connect((SERVER, PORT))
         
 
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s_to_client:
@@ -18,9 +19,8 @@ def main():
             s_to_client.listen()
             print('Waiting for client to connect.')
 
-            # TODO: using s_to_client to take connections from Client machine
-            #    return conn, addr objects; you should expect 1 line of codes
-            
+            # using s_to_client to take connections from Client machine
+            conn, addr = s_to_client.accept()
 
             with conn:
                 print('Connected by', addr)
@@ -33,12 +33,12 @@ def main():
                     else:
                         print('Receiving data from a client.')
                 
-                    # TODO: you should expect 3 lines of codes to do
                     #  1. append bytes from Client machine with ' from forward' and send them to Server machine
                     #  2. receive network packets from Server machine
                     #  3. append bytes from Server machine with ' from forward' and send them to Client machine
-
-
+                    s_to_server.sendall(data + b' from forward')
+                    server_response = s_to_server.recv(1024)
+                    conn.sendall(server_response + b' from forward')
 
 if __name__ == "__main__":
     main()

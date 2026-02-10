@@ -26,7 +26,8 @@ def main():
                 else:
                     print('Receiving data from a client.')
 
-                # TODO: append the data with bytes ' from server' and send the concacatenated bytes
+                # append the data with bytes ' from server' and send the concacatenated bytes
+                conn.sendall(data + b' from server')
                 
 
 if __name__ == "__main__":

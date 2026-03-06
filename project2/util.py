@@ -37,24 +37,26 @@ def unpack_dnp3m_response(data):
     res_length = len(data)
     assert( (res_length -2) % 5 == 0 )
     n_tuples = int((len(data) - 2)/5)
-    # TODO: define res_format used in struct.Struct to unpack "data" into a list "res_unpacked"
+    # define res_format used in struct.Struct to unpack "data" into a list "res_unpacked"
     #       you can refer to unpack_dnp3m_request for some helps
-    res_format = TODO
-    res_unpacked = TODO
+    res_format = '=' + 'BB' + 'Bf' * n_tuples
+    res_unpacked = struct.Struct(res_format).unpack(data)
 
-    # TODO: using assert to check whether this is a response or not
-    assert( TODO )
-    # TODO: check whether the value of the length field of the response includes the appropriate values or not
-    assert( TODO )
+    # using assert to check whether this is a response or not
+    assert(res_unpacked[0] == 0x0B)
+    # check whether the value of the length field of the response includes the appropriate values or not
+    assert(res_unpacked[1] == len(data))
     all_measure = {}
     for j in range(0, n_tuples):
-        # TODO unpack the data to store all measurements
+        # unpack the data to store all measurements
         #      all_measure should be a dictionary-type using index to indexed the corresponding measurement
-        #  In each iteration (expected 3~4 lines of codes)
+        #  In each iteration 
         #      Using j to locate the starting position of an index, extract its values as i
         #      Using j to locate the starting position of an measurement, extract its values as m
         #      Store m in all_measurement indexed by i
-        TODO
+        i = res_unpacked[2 + j * 2]
+        m = res_unpacked[2 + j * 2 + 1]
+        all_measure[i] = m
 
     return all_measure
 
@@ -73,7 +75,7 @@ def pack_dnp3m_response(indices, measurements):
 
     for i in indices:
         if i in measurements:
-            # TODO packed the measurements indexed by the values in "indices"
+            # packed the measurements indexed by the values in "indices"
             #       response_unpacked should be a list
             #       response_length should include the length of the response packet
             #       In each iteration
@@ -81,13 +83,15 @@ def pack_dnp3m_response(indices, measurements):
             #            increase the response_length by 1
             #            adding the measurements[i] into response_unpacked
             #            increase the response_length by 4
-            TODO
-            
+            response_unpacked.append(i)
+            response_length += 1
+            response_unpacked.append(measurements[i])
+            response_length += 4
             n_index = n_index + 1
-    # TODO defined response_format used in struct.Struct to pack the list into a byte object
-    response_format = TODO
-    # TODO pack the list "response_format" into a byte object "response"
-    response = TODO
+    # defined response_format used in struct.Struct to pack the list into a byte object
+    response_format = '=' + 'BB' + 'Bf' * n_index
+    # pack the list "response_format" into a byte object "response"
+    response = struct.Struct(response_format).pack(0x0B, response_length, *response_unpacked)
     return response
 
 

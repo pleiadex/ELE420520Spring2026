@@ -7,9 +7,9 @@ HOST = '10.0.0.13'  # put the ip address of the relay3 (as a TCP server)
 PORT = 20003
 
 # measurements contained in this relay
-# TODO replace x4 and x5 from the values you obtained from running calculate_fdia.m
-measurements = {51: 1.00, 52: x4, 53: -0.90, 54: 0.00, \
-          61: 1.00, 62: x5, 63: 0.00, 64: 0.00}
+# Estimated states x4, x5 from calculate_fdia.m baseline x_est
+measurements = {51: 1.00, 52: -0.07, 53: -0.90, 54: 0.00, \
+          61: 1.00, 62: 0.04, 63: 0.00, 64: 0.00}
 
 
 def main():

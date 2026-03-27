@@ -9,10 +9,11 @@ MY_HOST = '10.0.0.20'
 RELAY_IPs = ['10.0.0.11', '10.0.0.12', '10.0.0.13', '10.0.0.14']
 PORT = 20000
 
-# TODO put the values from calculate_fdia.m into the dictionary type fdia_measure
-#   construct fdia_measure as a dictionary type with the following key values (you should obtain the correspoding values from calculate_fdia.m): 
-#      {22: , 32: , 42: , 52: , 62: , 72: , 82: ,  92: , 13: , 23: , 33: , 43: , 53: , 63: , 73: , 83: , 93: }
-fdia_measure = {22: , 32: , 42: , 52: , 62: , 72: , 82: ,  92: , 13: , 23: , 33: , 43: , 53: , 63: , 73: , 83: , 93: }
+# Values from calculate_fdia.m: xa_est (indices 22..92) and za (indices 13..93)
+fdia_measure = {
+    22: 0.19, 32: 0.10, 42: -0.04, 52: -0.08, 62: 0.04, 72: 0.01, 82: 0.08, 92: -0.08,
+    13: 0.67, 23: 1.79, 33: 1.02, 43: 0.23, 53: -1.07, 63: -0.11, 73: -1.14, 83: 0.10, 93: -1.49,
+}
 
 def main():
 
@@ -72,8 +73,7 @@ def main():
                     # print all measurements combined from relays
                     util.print_measure(relay_measure)
                     # updated relay_measure with the results stored in fdia_measure
-                    # TODO: using util.change_measure to change relay_measure
-                    relay_measure = 
+                    relay_measure = util.change_measure(relay_measure, fdia_measure)
 
                     aggregate_res = util.pack_dnp3m_response(list_of_indices, relay_measure)    
                     conn.sendall(aggregate_res)

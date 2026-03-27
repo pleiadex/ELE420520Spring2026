@@ -7,9 +7,9 @@ HOST = '10.0.0.12'  # put the ip address of the relay2 (as a TCP server)
 PORT = 20002
 
 # measurements contained in this relay
-# TODO replace x2 and x3 from the values you obtained from running calculate_fdia.m
-measurements = {31: 1.00, 32: x2, 33: 0.85, 34: 0.00, \
-          41: 1.00, 42: x3, 43: 0.00, 44: 0.00}
+# Estimated states x2, x3 from calculate_fdia.m baseline x_est
+measurements = {31: 1.00, 32: 0.09, 33: 0.85, 34: 0.00, \
+          41: 1.00, 42: -0.04, 43: 0.00, 44: 0.00}
 
 
 

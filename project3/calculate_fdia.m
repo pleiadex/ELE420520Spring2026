@@ -37,16 +37,17 @@ gain = transpose(H) * W * H;
 x_est_ind = [22, 32, 42, 52, 62, 72, 82, 92];
 z_ind = [13, 23, 33, 43, 53, 63, 73, 83, 93];
 
-% TODO: calculate x_est based on the formulat given in the lecture
-x_est = ;
+% calculate x_est based on the formulat given in the lecture
+x_est = inv(gain) * transpose(H) * W * z;
 
 % Assume that this is the c that the FDIA tries to achieve
 c =[0.02;0.01;0.00;-0.01;0.00;0.00;0.01;-0.01];
-% TODO: calculate xa_est which is the compromised system states
-xa_est = ;
-% TODO: based on the conditiion presented in the lecture to calcualte the compromised measurements
-a = ;
-za = ;
+% calculate xa_est which is the compromised system states
+xa_est = x_est + c;
+
+% based on the conditiion presented in the lecture to calcualte the compromised measurements
+a = H * c;
+za = z + a;
 
 fprintf('***** Estimated States before FDIA *****\n');
 print_measure(x_est_ind, x_est);

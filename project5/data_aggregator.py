@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
-import socket
 import errno
+import os
+import socket
 from socket import error as socket_error
+
 import util
 
 MY_HOST = "10.0.0.20"
@@ -15,6 +17,8 @@ FDIA_ON = True
 # Type-C: maliciously override control setpoint at the MitM (type C / HotSoS).
 TYPE_C_ATTACK = False
 MALICIOUS_SETPOINT = 8.0
+if os.environ.get("PROJECT5_TYPE_C", "").lower() in ("1", "true", "yes"):
+    TYPE_C_ATTACK = True
 
 # Values from calculate_fdia.m: xa_est (indices 22..92) and za (indices 13..93)
 fdia_measure = {

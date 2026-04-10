@@ -43,6 +43,7 @@ def main():
 
     net.start()
     proj_dir = os.path.dirname(os.path.abspath(__file__))
+    child_env = os.environ.copy()
 
     try:
         for host, script in [
@@ -55,6 +56,7 @@ def main():
                 ["python3", os.path.join(proj_dir, script)],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
+                env=child_env,
             )
             time.sleep(0.15)
 
@@ -63,6 +65,7 @@ def main():
             ["python3", os.path.join(proj_dir, "data_aggregator.py")],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
+            env=child_env,
         )
         time.sleep(0.5)
 
@@ -76,6 +79,7 @@ def main():
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             cwd=proj_dir,
+            env=child_env,
         )
         out, err = cc_proc.communicate(timeout=30)
         print(out.decode())

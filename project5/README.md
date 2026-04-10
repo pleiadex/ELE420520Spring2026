@@ -29,6 +29,9 @@ Branch: **`project5`**. Code lives only in this directory; [`project3/`](../proj
 |------|---------|
 | `FDIA_ON` | Apply measurement FDIA map (Project 3 style). Set `False` for baseline polls. |
 | `TYPE_C_ATTACK` | Replace forwarded control setpoint with `MALICIOUS_SETPOINT` (physically unsafe ? relay rejects). |
+| `PROJECT5_TYPE_C` | Environment variable: if `1` / `true` / `yes`, enables Type-C MitM without editing the file (see `run_test.py`). |
+
+Smoke tests: `sudo python3 run_test.py` (expect control **accepted**). After `sudo mn -c`, run `sudo env PROJECT5_TYPE_C=1 python3 run_test.py` (expect control **rejected**, `status=1`).
 
 ## Primary references (PDFs in `docs/papers/`)
 

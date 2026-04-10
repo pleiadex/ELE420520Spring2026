@@ -1,0 +1,91 @@
+PROJECT5,RUN_START,mode=fdia_only,rounds=2,tier1=1,tier2=1,profile=boundary_tier2_only,sp=2.500000
+PROJECT5,CONFIG,mode=fdia_only,fdia=True,type_c=False,tier1_env=1,tier2_env=1
+PROJECT5,RELAY_CONTROL,relay=1,idx=23,sp=2.500000,decision=reject,reason=tier2_predicted_state_deviation,severity=0.120776,latency_ms=0.351
+PROJECT5,DA_CONTROL,mode=fdia_only,idx=23,orig_sp=2.500000,fwd_sp=2.500000,type_c=False,ack_status=1,latency_ms=0.637
+PROJECT5,RELAY_CONTROL,relay=1,idx=23,sp=2.500000,decision=reject,reason=tier2_predicted_state_deviation,severity=0.120776,latency_ms=0.139
+PROJECT5,DA_CONTROL,mode=fdia_only,idx=23,orig_sp=2.500000,fwd_sp=2.500000,type_c=False,ack_status=1,latency_ms=0.380
+--- Round 1: poll ---
+11 :   1.00
+12 :   0.00
+13 :   0.67
+14 :   0.00
+21 :   1.00
+22 :   0.19
+23 :   1.79
+24 :   0.00
+31 :   1.00
+32 :   0.10
+33 :   1.02
+34 :   0.00
+41 :   1.00
+42 :   -0.04
+43 :   0.23
+44 :   0.00
+51 :   1.00
+52 :   -0.08
+53 :   -1.07
+54 :   0.00
+61 :   1.00
+62 :   0.04
+63 :   -0.11
+64 :   0.00
+71 :   1.00
+72 :   0.01
+73 :   -1.14
+74 :   0.00
+81 :   1.00
+82 :   0.08
+83 :   0.10
+84 :   0.00
+91 :   1.00
+92 :   -0.08
+93 :   -1.49
+94 :   0.00
+
+
+--- Round 1: control (index 23 -> 2.5000 pu) ---
+PROJECT5,CC_CMD,mode=fdia_only,idx=23,sp=2.500000
+Control ack status=1 (rejected)
+--- Round 2: poll ---
+11 :   1.00
+12 :   0.00
+13 :   0.67
+14 :   0.00
+21 :   1.00
+22 :   0.19
+23 :   1.79
+24 :   0.00
+31 :   1.00
+32 :   0.10
+33 :   1.02
+34 :   0.00
+41 :   1.00
+42 :   -0.04
+43 :   0.23
+44 :   0.00
+51 :   1.00
+52 :   -0.08
+53 :   -1.07
+54 :   0.00
+61 :   1.00
+62 :   0.04
+63 :   -0.11
+64 :   0.00
+71 :   1.00
+72 :   0.01
+73 :   -1.14
+74 :   0.00
+81 :   1.00
+82 :   0.08
+83 :   0.10
+84 :   0.00
+91 :   1.00
+92 :   -0.08
+93 :   -1.49
+94 :   0.00
+
+
+--- Round 2: control (index 23 -> 2.5000 pu) ---
+PROJECT5,CC_CMD,mode=fdia_only,idx=23,sp=2.500000
+Control ack status=1 (rejected)
+PROJECT5,RUN_END,mode=fdia_only

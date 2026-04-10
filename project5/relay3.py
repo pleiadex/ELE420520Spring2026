@@ -36,7 +36,9 @@ def main():
                     break
                 print("Receiving data")
                 try:
-                    response, _kind = relay_common.handle_message(data, measurements)
+                    response, _kind = relay_common.handle_message(
+                        data, measurements, relay_id=3
+                    )
                 except (AssertionError, ValueError) as e:
                     print("Protocol error:", e)
                     break

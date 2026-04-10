@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import os
 import socket
 import time
 import util
@@ -65,8 +66,9 @@ def run_interactive():
         s.close()
 
 
-def run_auto_demo(rounds=2, pause=1.5):
-    """Periodic poll + legitimate P-injection trim on bus 2 (index 23); no blocking input."""
+def run_auto_demo(rounds=2, pause=1.5, control_index=23, control_setpoint=1.62):
+    """Periodic poll + P-injection control command; no blocking input."""
+    mode = os.environ.get("PROJECT5_MODE", "default")
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, PORT))
         for r in range(rounds):
@@ -78,8 +80,18 @@ def run_auto_demo(rounds=2, pause=1.5):
             util.print_measure(all_measure)
             time.sleep(pause)
 
-            print("--- Round %d: safe control (index 23 -> 1.62 pu) ---" % (r + 1))
-            s.sendall(util.pack_dnp3m_control(23, 1.62))
+            print(
+                "--- Round %d: control (index %d -> %.4f pu) ---"
+                % (r + 1, control_index, control_setpoint)
+            )
+            print(
+                "PROJECT5,CC_CMD,mode=%s,idx=%d,sp=%.6f"
+                % (mode, control_index, float(control_setpoint)),
+                flush=True,
+            )
+            s.sendall(
+                util.pack_dnp3m_control(int(control_index), float(control_setpoint))
+            )
             ack = s.recv(1024)
             status = util.unpack_control_ack(ack)
             print(
@@ -113,11 +125,28 @@ def main():
         default=1.5,
         help="Seconds between steps in auto mode.",
     )
+    parser.add_argument(
+        "--control-index",
+        type=int,
+        default=int(os.environ.get("PROJECT5_CONTROL_INDEX", "23")),
+        help="Measurement index for DNP3m control command.",
+    )
+    parser.add_argument(
+        "--control-setpoint",
+        type=float,
+        default=float(os.environ.get("PROJECT5_CONTROL_SP", "1.62")),
+        help="Setpoint (pu) for control command.",
+    )
     args = parser.parse_args()
     if args.interactive:
         run_interactive()
     else:
-        run_auto_demo(rounds=args.rounds, pause=args.pause)
+        run_auto_demo(
+            rounds=args.rounds,
+            pause=args.pause,
+            control_index=args.control_index,
+            control_setpoint=args.control_setpoint,
+        )
 
 
 if __name__ == "__main__":

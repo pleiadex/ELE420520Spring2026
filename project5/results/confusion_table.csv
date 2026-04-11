@@ -1,0 +1,2 @@
+benign_forwarded,benign_blocked,attack_forwarded,attack_blocked,n_events,policy_accuracy
+140,24,36,128,328,0.8170731707317073

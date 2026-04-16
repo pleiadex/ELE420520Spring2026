@@ -65,9 +65,8 @@ event dnp3m::data(c: connection, is_orig: bool, index: count, measure: double)
         {
         if (index in read_from_relays)
             {
-            # TODO
             # this if branch corresponds to packets from relays; store "measure" in the appropriate table with the "index"
-            read_from_  [ ] = TODO;
+            read_from_relays[index] = measure;
             
             read_from_relays_count = read_from_relays_count + 1;
             }
@@ -77,9 +76,8 @@ event dnp3m::data(c: connection, is_orig: bool, index: count, measure: double)
         {
         if (index in read_from_da)
             {
-            # TODO
             # this if branch corresponds to packets sent to control center; store "measure" in the appropriate table with the "index"
-            read_from_  [ ] = TODO;
+            read_from_da[index] = measure;
 
             read_from_da_count = read_from_da_count + 1;
             }

@@ -41,15 +41,15 @@ def main():
 
     net.build()
     net.start()
-	
-	cc.cmd('xterm -xrm \'XTerm.vt100.allowTitleOps: false\' -T \'Control Center\' &')
+
+    cc.cmd('xterm -xrm \'XTerm.vt100.allowTitleOps: false\' -T \'Control Center\' &')
     da.cmd('xterm -xrm \'XTerm.vt100.allowTitleOps: false\' -T \'Data Aggregator\' &')
     da.cmd('xterm -xrm \'XTerm.vt100.allowTitleOps: false\' -T \'Data Aggregator\' &')
     relay1.cmd('xterm -xrm \'XTerm.vt100.allowTitleOps: false\' -T \'Relay 1\' &')
     relay2.cmd('xterm -xrm \'XTerm.vt100.allowTitleOps: false\' -T \'Relay 2\' &')
     relay3.cmd('xterm -xrm \'XTerm.vt100.allowTitleOps: false\' -T \'Relay 3\' &')
     relay4.cmd('xterm -xrm \'XTerm.vt100.allowTitleOps: false\' -T \'Relay 4\' &')
-	
+
     CLI(net)
 
     net.stop()

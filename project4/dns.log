@@ -1,0 +1,18 @@
+#separator \x09
+#set_separator	,
+#empty_field	(empty)
+#unset_field	-
+#path	dns
+#open	2026-04-11-14-00-18
+#fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	proto	trans_id	rtt	query	qclass	qclass_name	qtype	qtype_name	rcode	rcode_name	AA	TC	RD	RA	Z	answers	TTLs	rejected
+#types	time	string	addr	port	addr	port	enum	count	interval	string	count	string	count	string	count	string	bool	bool	bool	bool	count	vector[string]	vector[interval]	bool
+1775930417.560813	CNl3lo4CQeEJSd8mtc	fe80::188f:47ff:fe48:7618	5353	ff02::fb	5353	udp	0	0.701402	raspi-2.local	1	C_INTERNET	255	*	0	NOERROR	T	F	F	F	0	raspi-2.local,fe80::188f:47ff:fe48:7618	120.000000,120.000000	F
+1775930417.593268	CWDBYX3lnMbENePIQe	fe80::180b:20ff:fe33:8a92	5353	ff02::fb	5353	udp	0	0.701064	raspi-2.local	1	C_INTERNET	255	*	0	NOERROR	T	F	F	F	0	raspi-2.local,fe80::180b:20ff:fe33:8a92	120.000000,120.000000	F
+1775930418.265684	CJ5XRm1GBZz4PqJsHl	fe80::f49f:52ff:fe4a:2679	5353	ff02::fb	5353	udp	0	0.700826	raspi-2.local	1	C_INTERNET	255	*	0	NOERROR	T	F	F	F	0	raspi-2.local,fe80::f49f:52ff:fe4a:2679	120.000000,120.000000	F
+1775930417.811578	CNl3lo4CQeEJSd8mtc	fe80::188f:47ff:fe48:7618	5353	ff02::fb	5353	udp	0	1.578820	raspi-2.local	1	C_INTERNET	255	*	0	NOERROR	T	F	F	F	0	raspi-2.local,fe80::188f:47ff:fe48:7618	120.000000,120.000000	F
+1775930417.844319	CWDBYX3lnMbENePIQe	fe80::180b:20ff:fe33:8a92	5353	ff02::fb	5353	udp	0	1.577626	raspi-2.local	1	C_INTERNET	255	*	0	NOERROR	T	F	F	F	0	raspi-2.local,fe80::180b:20ff:fe33:8a92	120.000000,120.000000	F
+1775930418.516149	CJ5XRm1GBZz4PqJsHl	fe80::f49f:52ff:fe4a:2679	5353	ff02::fb	5353	udp	0	1.578707	raspi-2.local	1	C_INTERNET	255	*	0	NOERROR	T	F	F	F	0	raspi-2.local,fe80::f49f:52ff:fe4a:2679	120.000000,120.000000	F
+1775930418.062806	CNl3lo4CQeEJSd8mtc	fe80::188f:47ff:fe48:7618	5353	ff02::fb	5353	udp	0	-	raspi-2.local	1	C_INTERNET	255	*	-	-	F	F	F	F	0	-	-	F
+1775930418.094171	CWDBYX3lnMbENePIQe	fe80::180b:20ff:fe33:8a92	5353	ff02::fb	5353	udp	0	-	raspi-2.local	1	C_INTERNET	255	*	-	-	F	F	F	F	0	-	-	F
+1775930418.766467	CJ5XRm1GBZz4PqJsHl	fe80::f49f:52ff:fe4a:2679	5353	ff02::fb	5353	udp	0	-	raspi-2.local	1	C_INTERNET	255	*	-	-	F	F	F	F	0	-	-	F
+#close	2026-04-11-14-00-20

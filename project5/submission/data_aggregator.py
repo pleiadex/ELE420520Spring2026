@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+"""
+[A1 - AI-Edited]
+"""
+
 import os
 import socket
 import time

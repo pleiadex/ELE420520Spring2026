@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """
+[A4 - AI-Generated]
+
 Full experiment runner for Project 5.
 
 Phase 1 — Mode/profile matrix (164 runs):
